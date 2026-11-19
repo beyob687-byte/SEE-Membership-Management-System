@@ -1,0 +1,258 @@
+/* =========================
+   FOOTER
+========================= */
+
+.site-footer {
+  background: #162e46;
+  color: #ffffff;
+  padding: 65px 0 0;
+  margin-top: 80px;
+}
+
+.footer-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+/* =========================
+   MAIN FOOTER
+========================= */
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.5fr 0.8fr 1fr 1.2fr;
+  gap: 45px;
+  padding-bottom: 55px;
+}
+
+/* =========================
+   BRAND
+========================= */
+
+.footer-brand {
+  max-width: 300px;
+}
+
+.footer-logo {
+  width: 250px;
+  height: auto;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.footer-brand > p {
+  color: #c4d0da;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 22px 0;
+}
+
+/* =========================
+   SOCIAL LINKS
+========================= */
+
+.footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.footer-socials a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 5px;
+  transition: all 0.25s ease;
+}
+
+.footer-socials a:hover {
+  background: #ffffff;
+  color: #162e46;
+  border-color: #ffffff;
+}
+
+/* =========================
+   FOOTER COLUMNS
+========================= */
+
+.footer-column h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 24px;
+  color: #ffffff;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 15px;
+}
+
+.footer-column ul a {
+  color: #c4d0da;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.footer-column ul a:hover {
+  color: #ffffff;
+  padding-left: 5px;
+}
+
+.footer-contact span {
+  display: block;
+  font-size: 12px;
+  color: #9eafbd;
+  margin-bottom: 5px;
+}
+
+.footer-contact p {
+  color: #c4d0da;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* =========================
+   NEWSLETTER
+========================= */
+
+.footer-newsletter > p {
+  color: #c4d0da;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.newsletter-form {
+  display: flex;
+  width: 100%;
+  height: 46px;
+  background: #ffffff;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.newsletter-form input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #162e46;
+}
+
+.newsletter-form button {
+  width: 48px;
+  border: none;
+  background: #ffffff;
+  color: #162e46;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.newsletter-form button:hover {
+  background: #dce5eb;
+}
+
+.footer-newsletter small {
+  display: block;
+  margin-top: 12px;
+  font-size: 11px;
+  color: #9eafbd;
+}
+
+/* =========================
+   BOTTOM FOOTER
+========================= */
+
+.footer-bottom {
+  min-height: 75px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-bottom p {
+  color: #aebdca;
+  font-size: 12px;
+  margin: 0;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 25px;
+}
+
+.footer-bottom-links a {
+  color: #aebdca;
+  font-size: 12px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: #ffffff;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 950px) {
+  .footer-main {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 550px) {
+  .site-footer {
+    padding-top: 45px;
+    margin-top: 50px;
+  }
+
+  .footer-container {
+    padding: 0 20px;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    padding-bottom: 35px;
+  }
+
+  .footer-brand {
+    max-width: 100%;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 22px 0;
+  }
+
+  .footer-bottom-links {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
