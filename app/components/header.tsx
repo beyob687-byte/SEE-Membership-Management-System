@@ -35,16 +35,7 @@ export default function Header() {
           href="/"
           className="brand"
           aria-label="Social Enterprise Ethiopia home"
-        >
-          <Image
-            src=""
-            alt="Social Enterprise Ethiopia"
-            width={299}
-            height={63}
-            priority
-            className="brand-logo"
-          />
-        </Link>
+        ></Link>
 
         {/* Mobile Menu Button */}
         <button
