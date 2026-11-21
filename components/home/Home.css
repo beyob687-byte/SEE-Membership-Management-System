@@ -1,0 +1,440 @@
+/* ========================================
+   IMPACT STATISTICS
+======================================== */
+
+.impact-section {
+    position: relative;
+    padding: 85px 0 35px;
+    overflow: hidden;
+    background: #202b28;
+    color: white;
+  }
+  
+  .impact-header {
+    margin-bottom: 48px;
+    text-align: center;
+  }
+  
+  .impact-eyebrow {
+    display: inline-block;
+    margin-bottom: 17px;
+    color: #62c9b5;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+  }
+  
+  .impact-header h2 {
+    color: white;
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+  }
+  
+  .impact-header h2 span {
+    color: #62c9b5;
+  }
+  
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  
+  .impact-card {
+    position: relative;
+    min-width: 0;
+    padding: 30px 35px 35px;
+    overflow: hidden;
+    transition: background 300ms ease;
+  }
+  
+  .impact-card + .impact-card {
+    border-left: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  
+  .impact-card:hover {
+    background: rgba(255, 255, 255, 0.035);
+  }
+  
+  .impact-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 38px;
+  }
+  
+  .impact-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #18a878;
+    box-shadow: 0 0 15px rgba(24, 168, 120, 0.45);
+  }
+  
+  .impact-dot-2 {
+    background: #f4c400;
+    box-shadow: 0 0 15px rgba(244, 196, 0, 0.4);
+  }
+  
+  .impact-dot-3 {
+    background: #f07832;
+    box-shadow: 0 0 15px rgba(240, 120, 50, 0.4);
+  }
+  
+  .impact-card-index {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  
+  .impact-number {
+    color: white;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -3px;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .impact-counter {
+    display: inline-block;
+  }
+  
+  .impact-card h3 {
+    margin-top: 13px;
+    color: #62c9b5;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  
+  .impact-card p {
+    max-width: 230px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  
+  .impact-card-line {
+    width: 35px;
+    height: 2px;
+    margin-top: 27px;
+    background: #18a878;
+    transition: width 400ms ease;
+  }
+  
+  .impact-card:hover .impact-card-line {
+    width: 75px;
+  }
+  
+  .impact-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding-top: 25px;
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+  
+  .impact-bottom-decoration {
+    color: #f4c400;
+    font-size: 17px;
+  }
+  
+  /* ========================================
+     ABOUT PREVIEW
+  ======================================== */
+  
+  .about-preview {
+    position: relative;
+    overflow: hidden;
+    background: white;
+  }
+  
+  .about-preview-container {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: center;
+    gap: 100px;
+  }
+  
+  /* IMAGE */
+  
+  .about-visual {
+    position: relative;
+    min-width: 0;
+    padding: 0 35px 35px 0;
+  }
+  
+  .about-image-frame {
+    position: relative;
+    height: 570px;
+    overflow: hidden;
+    border-radius: 5px 100px 5px 5px;
+    background: #e8eee9;
+  }
+  
+  .about-image {
+    object-fit: cover;
+    object-position: center;
+    transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .about-visual:hover .about-image {
+    transform: scale(1.05);
+  }
+  
+  .about-image-accent {
+    position: absolute;
+    z-index: 0;
+    right: 0;
+    bottom: 0;
+    width: 180px;
+    height: 180px;
+    border-right: 3px solid var(--color-yellow);
+    border-bottom: 3px solid var(--color-orange);
+    pointer-events: none;
+  }
+  
+  .about-image-caption {
+    position: absolute;
+    left: -25px;
+    bottom: 65px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 18px 22px;
+    border-radius: 6px;
+    background: white;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .about-caption-symbol {
+    display: grid;
+    place-items: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    background: rgba(24, 168, 120, 0.1);
+    color: var(--color-green);
+    font-size: 25px;
+  }
+  
+  .about-image-caption strong {
+    display: block;
+    color: var(--color-heading);
+    font-size: 12px;
+  }
+  
+  .about-image-caption p {
+    margin-top: 3px;
+    color: var(--color-muted);
+    font-size: 11px;
+  }
+  
+  /* CONTENT */
+  
+  .about-content {
+    padding-block: 20px;
+  }
+  
+  .about-title {
+    margin-top: 12px;
+    font-size: clamp(2.5rem, 4vw, 3.8rem);
+    letter-spacing: -2.5px;
+    line-height: 1.13;
+  }
+  
+  .about-title span {
+    color: var(--color-teal);
+  }
+  
+  .about-description {
+    margin-top: 24px;
+    color: var(--color-text);
+    font-size: 14px;
+    line-height: 1.95;
+  }
+  
+  .about-mission {
+    display: flex;
+    gap: 17px;
+    margin-top: 30px;
+    padding: 22px;
+    border-radius: 5px;
+    background: var(--color-background);
+  }
+  
+  .about-mission-line {
+    width: 3px;
+    flex-shrink: 0;
+    background: var(--color-orange);
+  }
+  
+  .about-mission-label {
+    color: var(--color-teal);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+  }
+  
+  .about-mission p {
+    margin-top: 8px;
+    color: var(--color-heading);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.9;
+  }
+  
+  .about-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-top: 27px;
+  }
+  
+  .about-highlights li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--color-text);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .about-highlights li span {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0, 143, 131, 0.1);
+    color: var(--color-teal);
+    font-size: 11px;
+  }
+  
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 35px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--color-teal);
+    color: var(--color-teal);
+    font-size: 13px;
+    font-weight: 800;
+    transition: gap var(--transition);
+  }
+  
+  .about-link:hover {
+    gap: 23px;
+  }
+  
+  .about-link span {
+    font-size: 17px;
+  }
+  
+  /* ========================================
+     RESPONSIVE
+  ======================================== */
+  
+  @media (max-width: 900px) {
+    .about-preview-container {
+      gap: 55px;
+    }
+  
+    .about-image-frame {
+      height: 480px;
+    }
+  
+    .impact-card {
+      padding-inline: 22px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .impact-section {
+      padding-top: 70px;
+    }
+  
+    .impact-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .impact-card {
+      padding: 25px 15px;
+    }
+  
+    .impact-card + .impact-card {
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+  
+    .impact-card-top {
+      margin-bottom: 20px;
+    }
+  
+    .impact-number {
+      font-size: 3.5rem;
+    }
+  
+    .impact-bottom {
+      gap: 10px;
+      font-size: 8px;
+      letter-spacing: 1px;
+    }
+  
+    .about-preview-container {
+      grid-template-columns: 1fr;
+      gap: 55px;
+    }
+  
+    .about-visual {
+      width: min(100%, 540px);
+      margin-inline: auto;
+    }
+  
+    .about-image-frame {
+      height: 490px;
+    }
+  
+    .about-content {
+      padding-block: 0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .impact-header h2 {
+      font-size: 2rem;
+    }
+  
+    .impact-number {
+      font-size: 3rem;
+    }
+  
+    .about-image-frame {
+      height: 390px;
+      border-top-right-radius: 70px;
+    }
+  
+    .about-image-caption {
+      left: -8px;
+      bottom: 35px;
+      padding: 13px;
+    }
+  
+    .about-title {
+      font-size: 2.6rem;
+    }
+  
+    .impact-bottom {
+      flex-wrap: wrap;
+    }
+  }
+  
