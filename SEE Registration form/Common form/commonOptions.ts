@@ -1,11 +1,12 @@
+
 export const referralOptions = [
-  "Event / Workshop",
+  "Event/Workshop",
   "Social Media",
   "Referral",
   "SEE Website",
   "Partner NGO",
   "Other",
-] as const;
+];
 
 export const membershipReasonOptions = [
   "Network & Collaborate",
@@ -19,4 +20,4 @@ export const membershipReasonOptions = [
   "Connect with Partners",
   "Scale Impact",
   "Sustainable Community",
-] as const;
+];

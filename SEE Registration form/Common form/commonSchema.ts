@@ -1,43 +1,35 @@
+
 import { z } from "zod";
 
-export const commonFormSchema = z.object({
+export const commonSchema = z.object({
   fullName: z
     .string()
     .trim()
-    .min(1, "Full name is required"),
+    .min(2, "Full name must contain at least 2 characters"),
 
   email: z
     .string()
     .trim()
-    .min(1, "Email is required")
-    .email("Enter a valid email address"),
+    .email("Please enter a valid email address"),
 
   phone: z
     .string()
     .trim()
-    .min(1, "Phone number is required")
-    .regex(/^\+?[0-9\s()-]{9,20}$/, "Enter a valid phone number"),
+    .transform((value) => value.replace(/[\s-]/g, ""))
+    .pipe(
+      z
+        .string()
+        .regex(
+          /^(?:\+251[97]\d{8}|0[97]\d{8})$/,
+          "Enter a valid Ethiopian phone number"
+        )
+    ),
 
-  nationalId: z
-    .string()
-    .trim()
-    .min(1, "National ID is required"),
+  nationalId: z.string().optional(),
 
-  referralSource: z
-    .string()
-    .min(1, "Please select how you heard about SEE"),
+  referralSource: z.string().optional(),
 
-  membershipReasons: z
-    .array(z.string())
-    .min(1, "Select at least one reason for joining"),
-
-  city: z
-    .string()
-    .trim()
-    .min(1, "City is required"),
-
-  address: z
-    .string()
-    .trim()
-    .min(1, "Address is required"),
+  membershipReasons: z.array(z.string()).optional(),
 });
+
+export type CommonSchemaData = z.infer<typeof commonSchema>;

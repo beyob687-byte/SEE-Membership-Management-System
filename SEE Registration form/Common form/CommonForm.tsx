@@ -1,237 +1,148 @@
+
 "use client";
+
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { commonFormSchema } from "./commonSchema";
-import type { CommonFormData } from "./commonTypes";
-import {referralOptions,membershipReasonOptions,} from "./commonOptions";
 
-interface CommonFormProps {
-  onSubmit: (data: CommonFormData) => void;
-}
+import { CommonFormData, CommonFormProps } from "./commonTypes";
+import { commonSchema } from "./commonSchema";
+import {
+  referralOptions,
+  membershipReasonOptions,
+} from "./commonOptions";
 
-export default function CommonForm({ onSubmit }: CommonFormProps) {
+export default function CommonForm({
+  value,
+  onChange,
+}: CommonFormProps) {
   const {
     register,
-    handleSubmit,
     watch,
-    setValue,
     formState: { errors },
   } = useForm<CommonFormData>({
-    resolver: zodResolver(commonFormSchema),
-    defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      nationalId: "",
-      referralSource: "",
-      membershipReasons: [],
-      city: "",
-      address: "",
-    },
+    resolver: zodResolver(commonSchema),
+    defaultValues: value,
+    mode: "onBlur",
   });
 
-  const selectedReasons = watch("membershipReasons");
-
-  const handleReasonChange = (reason: string) => {
-    const updatedReasons = selectedReasons.includes(reason)
-      ? selectedReasons.filter((item: string) => item !== reason)
-      : [...selectedReasons, reason];
-
-    setValue("membershipReasons", updatedReasons, {
-      shouldValidate: true,
+  useEffect(() => {
+    const subscription = watch((data) => {
+      onChange(data as CommonFormData);
     });
-  };
+
+    return () => subscription.unsubscribe();
+  }, [watch, onChange]);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="addinformation"
-    >
-      <section className="persenalinfo">
-        <h2 className="personal">
-          Personal Information
+    <section className="space-y-6 rounded-xl border bg-white p-6">
+      <div>
+        <h2 className="text-xl font-bold text-gray-800">
+          Common Information
         </h2>
+        <p className="mt-1 text-sm text-gray-500">
+          Please provide your basic contact information.
+        </p>
+      </div>
 
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <div>
-          <label className="fullname">
+          <label className="mb-2 block text-sm font-medium">
             Full Name *
           </label>
-
           <input
             {...register("fullName")}
             placeholder="Enter your full name"
-            className="full"/>
-
-          {errors.fullName && (
-            <p className="name">
-              {errors.fullName.message}
-            </p>
-          )}
+            className="w-full rounded-lg border px-4 py-3"
+          />
+          <p className="mt-1 text-sm text-red-600">
+            {errors.fullName?.message}
+          </p>
         </div>
 
         <div>
-          <label className="Email">
+          <label className="mb-2 block text-sm font-medium">
             Email Address *
           </label>
-
           <input
-            {...register("email")}
             type="email"
+            {...register("email")}
             placeholder="example@email.com"
-            className="emailadderase"/>
-
-          {errors.email && (
-            <p className="email">
-              {errors.email.message}
-            </p>
-          )}
+            className="w-full rounded-lg border px-4 py-3"
+          />
+          <p className="mt-1 text-sm text-red-600">
+            {errors.email?.message}
+          </p>
         </div>
 
         <div>
-          <label className="ponenumber">
+          <label className="mb-2 block text-sm font-medium">
             Phone Number *
           </label>
-
           <input
             {...register("phone")}
-            type="tel"
             placeholder="+251 9XX XXX XXX"
-            className="number"/>
-
-          {errors.phone && (
-            <p className="phone">
-              {errors.phone.message}
-            </p>
-          )}
+            className="w-full rounded-lg border px-4 py-3"
+          />
+          <p className="mt-1 text-sm text-red-600">
+            {errors.phone?.message}
+          </p>
         </div>
 
         <div>
-          <label className="idnational">
-            National ID *
+          <label className="mb-2 block text-sm font-medium">
+            National ID / Fayda (Optional)
           </label>
-
           <input
             {...register("nationalId")}
-            placeholder="Enter your National ID"
-            className="national" />
-
-          {errors.nationalId && (
-            <p className="nationalid">
-              {errors.nationalId.message}
-            </p>
-          )}
+            placeholder="Enter your ID number"
+            className="w-full rounded-lg border px-4 py-3"
+          />
         </div>
-      </section>
 
-      <section className="About">
-        <h2 className="about">
-          How Did You Hear About SEE?
-        </h2>
+        <div className="md:col-span-2">
+          <label className="mb-2 block text-sm font-medium">
+            How did you hear about SEE?
+          </label>
+          <select
+            {...register("referralSource")}
+            className="w-full rounded-lg border bg-white px-4 py-3"
+          >
+            <option value="">Select an option</option>
+            {referralOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
 
-        <select
-          {...register("referralSource")}
-          className="referr"
-        >
-          <option value="">Select an option</option>
-
-          {referralOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-
-        {errors.referralSource && (
-          <p className="source">
-            {errors.referralSource.message}
-          </p>
-        )}
-      </section>
-
-
-      <section className="applys">
-        <h2 className="apply1">
-          Why Do You Want to Join SEE?
-        </h2>
-
-        <p className="apply">
-          Select all the reasons that apply to you.
+      <div>
+        <h3 className="mb-2 font-semibold text-gray-800">
+          Why do you want to join SEE?
+        </h3>
+        <p className="mb-4 text-sm text-gray-500">
+          Select all reasons that apply to you.
         </p>
 
-        <div className="option1">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {membershipReasonOptions.map((reason) => (
             <label
               key={reason}
-              className="option"
+              className="flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm hover:bg-gray-50"
             >
               <input
                 type="checkbox"
-                checked={selectedReasons.includes(reason)}
-                onChange={() => handleReasonChange(reason)}
-                className="checkbox1"
+                value={reason}
+                {...register("membershipReasons")}
+                className="h-4 w-4 accent-teal-700"
               />
-
-              <span className="checkbox">{reason}</span>
+              {reason}
             </label>
           ))}
         </div>
-
-        {errors.membershipReasons && (
-          <p className="message1">
-            {errors.membershipReasons.message}
-          </p>
-        )}
-      </section>
-
-     
-      <section className="Information">
-        <h2 className="information">
-          Address Information
-        </h2>
-
-        <div>
-          <label className="City">
-            City *
-          </label>
-
-          <input
-            {...register("city")}
-            placeholder="Enter your city"
-            className="city1"
-          />
-
-          {errors.city && (
-            <p className="city">
-              {errors.city.message}
-            </p>
-          )}
-        </div>
-
-        <div>
-          <label className="address1">
-            Address *
-          </label>
-
-          <input
-            {...register("address")}
-            
-            placeholder="Enter your address"
-            className="Address"
-          />
-
-          {errors.address && (
-            <p className="message">
-              {errors.address.message}
-            </p>
-          )}
-        </div>
-      </section>
-      <button
-        type="submit"
-        className="submit"
-      >
-        Continue
-      </button>
-    </form>
+      </div>
+    </section>
   );
 }
