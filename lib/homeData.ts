@@ -100,3 +100,37 @@ export const whatWeDo = [
     symbol: "✳",
   },
 ];
+
+
+export const featuredPrograms = [
+  {
+    id: "01",
+    category: "ENTREPRENEURSHIP DEVELOPMENT",
+    title: "Building businesses with purpose.",
+    description:
+      "Supporting aspiring and established social entrepreneurs through training, mentorship, coaching, and business development services.",
+    image: "/images/programs/entrepreneurship.jpg",
+    size: "large",
+    accent: "teal",
+  },
+  {
+    id: "02",
+    category: "CAPACITY BUILDING",
+    title: "Strengthening skills. Creating opportunities.",
+    description:
+      "Developing the leadership, business, financial, and organizational capabilities of social enterprises and ecosystem actors.",
+    image: "/images/programs/capacity-building.jpg",
+    size: "small",
+    accent: "orange",
+  },
+  {
+    id: "03",
+    category: "POLICY & ADVOCACY",
+    title: "Creating an enabling environment.",
+    description:
+      "Working with policymakers and ecosystem stakeholders to advance policies that support social enterprise growth.",
+    image: "/images/programs/policy-advocacy.jpg",
+    size: "small",
+    accent: "green",
+  },
+];
