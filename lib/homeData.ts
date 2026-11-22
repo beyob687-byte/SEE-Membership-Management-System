@@ -202,3 +202,36 @@ export const featuredMembers = [
     location: "Ethiopia",
   },
 ];
+
+export const developmentPartners = [
+  {
+    id: "01",
+    name: "Development Partner One",
+    logo: "/images/partners/partner-one.png",
+    website: "#",
+  },
+  {
+    id: "02",
+    name: "Development Partner Two",
+    logo: "/images/partners/partner-two.png",
+    website: "#",
+  },
+  {
+    id: "03",
+    name: "Development Partner Three",
+    logo: "/images/partners/partner-three.png",
+    website: "#",
+  },
+  {
+    id: "04",
+    name: "Development Partner Four",
+    logo: "/images/partners/partner-four.png",
+    website: "#",
+  },
+  {
+    id: "05",
+    name: "Development Partner Five",
+    logo: "/images/partners/partner-five.png",
+    website: "#",
+  },
+];

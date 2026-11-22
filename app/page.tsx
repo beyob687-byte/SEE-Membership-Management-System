@@ -5,6 +5,7 @@ import WhatWeDo from "@/components/home/WhatWeDo";
 import FeaturedPrograms from "@/components/home/FeaturedPrograms";
 import FeaturedEvents from "@/components/home/FeaturedEvents";
 import MemberShowcase from "@/components/home/MemberShowcase";
+import DevelopmentPartners from "@/components/home/DevelopmentPartners";
 
 export default function HomePage() {
   return (
@@ -16,7 +17,7 @@ export default function HomePage() {
       <FeaturedPrograms/>
       <FeaturedEvents />
       <MemberShowcase />
-      {/* Upcoming sections */}
+      <DevelopmentPartners />
     </>
   );
 } 
