@@ -1,0 +1,7 @@
+/* Keep shared form styles before the category-specific overrides. */
+@import "tailwindcss";
+@import "../SEE Registration form/styles/common-membership.css";
+@import "../SEE Registration form/styles/enterprise.css";
+@import "../SEE Registration form/styles/individual.css";
+@import "../SEE Registration form/styles/institutional.css";
+@import "../SEE Registration form/styles/founding-honorary.css";

@@ -1,34 +1,75 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useMemo, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 
 import CommonForm from "../../../SEE Registration form/Common form/CommonForm";
 import type { CommonFormData } from "../../../SEE Registration form/Common form/commonTypes";
+import { commonSchema } from "../../../SEE Registration form/Common form/commonSchema";
+import {
+  RegistrationFieldErrorsProvider,
+  type RegistrationFieldErrors,
+} from "../../../SEE Registration form/Common form/registrationValidation";
 
 import EarlyStageForm from "../../../SEE Registration form/main folders/Enterprise/Early-Stage/EarlyStageForm";
 import type { EarlyStageFormData } from "../../../SEE Registration form/main folders/Enterprise/Early-Stage/earlyStageTypes";
+import { earlyStageSchema } from "../../../SEE Registration form/main folders/Enterprise/Early-Stage/earlyStageSchema";
 
 import EstablishedForm from "../../../SEE Registration form/main folders/Enterprise/Established/EstablishedForm";
 import type { EstablishedFormData } from "../../../SEE Registration form/main folders/Enterprise/Established/establishedTypes";
+import { establishedSchema } from "../../../SEE Registration form/main folders/Enterprise/Established/establishedSchema";
 
 import StudentForm from "../../../SEE Registration form/main folders/Individual/Student/StudentForm";
 import type { StudentFormData } from "../../../SEE Registration form/main folders/Individual/Student/studentTypes";
+import { studentSchema } from "../../../SEE Registration form/main folders/Individual/Student/studentSchema";
 
 import IndividualMemberForm from "../../../SEE Registration form/main folders/Individual/Individual-Member/IndividualMemberForm";
 import type { IndividualMemberFormData } from "../../../SEE Registration form/main folders/Individual/Individual-Member/individualMemberTypes";
+import { individualMemberSchema } from "../../../SEE Registration form/main folders/Individual/Individual-Member/individualMemberSchema";
 
 import SmallForm from "../../../SEE Registration form/main folders/Institutional/Small/SmallForm";
 import type { SmallInstitutionFormData } from "../../../SEE Registration form/main folders/Institutional/Small/smallTypes";
+import { smallInstitutionSchema } from "../../../SEE Registration form/main folders/Institutional/Small/smallSchema";
 
 import MediumForm from "../../../SEE Registration form/main folders/Institutional/Medium/MediumForm";
 import type { MediumInstitutionFormData } from "../../../SEE Registration form/main folders/Institutional/Medium/mediumTypes";
+import { mediumInstitutionSchema } from "../../../SEE Registration form/main folders/Institutional/Medium/mediumSchema";
 
 import LargeForm from "../../../SEE Registration form/main folders/Institutional/Large/LargeForm";
 import type { LargeInstitutionFormData } from "../../../SEE Registration form/main folders/Institutional/Large/largeTypes";
+import { largeInstitutionSchema } from "../../../SEE Registration form/main folders/Institutional/Large/largeSchema";
+
+// Founding Member
+import FoundingMemberForm from "../../../SEE Registration form/main folders/Founding-Honorary/Founding/FoundingMemberForm";
+import type { FoundingMemberFormData } from "../../../SEE Registration form/main folders/Founding-Honorary/Founding/foundingMemberTypes";
+import { foundingMemberSchema } from "../../../SEE Registration form/main folders/Founding-Honorary/Founding/foundingMemberSchema";
+
+// Honorary Member
+import HonoraryMemberForm from "../../../SEE Registration form/main folders/Founding-Honorary/Honorary/HonoraryMemberForm";
+import type { HonoraryMemberFormData } from "../../../SEE Registration form/main folders/Founding-Honorary/Honorary/honoraryMemberTypes";
+import { honoraryMemberSchema } from "../../../SEE Registration form/main folders/Founding-Honorary/Honorary/honoraryMemberSchema";
+
+type ValidationIssue = {
+  path: PropertyKey[];
+  message: string;
+};
+
+function getFieldErrors(issues: readonly ValidationIssue[]) {
+  const fieldErrors: RegistrationFieldErrors = {};
+
+  for (const issue of issues) {
+    const fieldName = issue.path.map(String).join(".");
+    if (fieldName && !fieldErrors[fieldName]) {
+      fieldErrors[fieldName] = issue.message;
+    }
+  }
+
+  return fieldErrors;
+}
 
 function RegistrationContent() {
   const searchParams = useSearchParams();
+  const [validationAttempted, setValidationAttempted] = useState(false);
 
   const category = searchParams.get("category") || "";
   const subcategory = searchParams.get("subcategory") || "";
@@ -169,29 +210,25 @@ function RegistrationContent() {
       tinDocument: null,
     });
 
-  // Membership selection validation
-  if (!category || !subcategory) {
-    return (
-      <main className="min-h-screen bg-gray-50 p-8">
-        <div className="mx-auto max-w-3xl rounded-xl bg-white p-6 shadow-sm">
-          <h1 className="text-xl font-bold text-gray-800">
-            No Membership Selected
-          </h1>
+  // Founding Member data
+  const [foundingMemberData, setFoundingMemberData] =
+    useState<FoundingMemberFormData>({
+      organizationName: "",
+      foundingStatus: "",
+      yearJoinedInceptionTeam: "",
+      executivePositionOrBoardRole: "",
+      historicalGovernanceRole: "",
+      strategicTrackRecord: "",
+    });
 
-          <p className="mt-2 text-gray-600">
-            Please return to the membership selection page and select a category and subcategory first.
-          </p>
-
-          <a
-            href="/membership-preview"
-            className="mt-5 inline-block rounded-lg bg-blue-700 px-5 py-3 text-white hover:bg-blue-800"
-          >
-            Back to Membership Selection
-          </a>
-        </div>
-      </main>
-    );
-  }
+  // Honorary Member data
+  const [honoraryMemberData, setHonoraryMemberData] =
+    useState<HonoraryMemberFormData>({
+      nomineeName: "",
+      organization: "",
+      recognitionReason: "",
+      contributionToSEE: "",
+    });
 
   // Membership conditions
   const isEarlyStage =
@@ -222,6 +259,15 @@ function RegistrationContent() {
     category === "institutional" &&
     subcategory === "large-institution";
 
+  // Founding and Honorary category
+  const isFoundingMember =
+    category === "founding-honorary" &&
+    subcategory === "founding";
+
+  const isHonoraryMember =
+    category === "founding-honorary" &&
+    subcategory === "honorary";
+
   // Membership title
   const membershipTitle = isEarlyStage
     ? "Early-Stage Enterprises"
@@ -237,46 +283,181 @@ function RegistrationContent() {
               ? "Medium Institutional Membership"
               : isLargeInstitution
                 ? "Large Institutional Membership"
-                : `${category} - ${subcategory}`;
+                : isFoundingMember
+                  ? "Founding Member"
+                  : isHonoraryMember
+                    ? "Honorary Member"
+                    : `${category} - ${subcategory}`;
 
-  return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10">
-      <div className="mx-auto max-w-4xl space-y-6">
+  const isConnectedMembershipType =
+    isEarlyStage ||
+    isEstablished ||
+    isStudent ||
+    isIndividualMember ||
+    isSmallInstitution ||
+    isMediumInstitution ||
+    isLargeInstitution ||
+    isFoundingMember ||
+    isHonoraryMember;
 
-        {/* Page Header */}
-        <header>
-          <p className="text-sm font-semibold text-blue-700">
-            SEE MEMBERSHIP REGISTRATION
-          </p>
+  const validatedFieldErrors = useMemo(() => {
+    const commonResult = commonSchema.safeParse(commonData);
+    const errors: RegistrationFieldErrors = commonResult.success
+      ? {}
+      : getFieldErrors(commonResult.error.issues);
 
-          <h1 className="mt-2 text-3xl font-bold text-gray-800">
-            Registration Form
+    if (isEarlyStage) {
+      const result = earlyStageSchema.safeParse(earlyStageData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isEstablished) {
+      const result = establishedSchema.safeParse(establishedData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isStudent) {
+      const result = studentSchema.safeParse(studentData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isIndividualMember) {
+      const result = individualMemberSchema.safeParse(individualMemberData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isSmallInstitution) {
+      const result = smallInstitutionSchema.safeParse(smallInstitutionData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isMediumInstitution) {
+      const result = mediumInstitutionSchema.safeParse(mediumInstitutionData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isLargeInstitution) {
+      const result = largeInstitutionSchema.safeParse(largeInstitutionData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isFoundingMember) {
+      const result = foundingMemberSchema.safeParse(foundingMemberData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    } else if (isHonoraryMember) {
+      const result = honoraryMemberSchema.safeParse(honoraryMemberData);
+      if (!result.success) Object.assign(errors, getFieldErrors(result.error.issues));
+    }
+
+    return errors;
+  }, [
+    commonData,
+    earlyStageData,
+    establishedData,
+    foundingMemberData,
+    honoraryMemberData,
+    individualMemberData,
+    isEarlyStage,
+    isEstablished,
+    isFoundingMember,
+    isHonoraryMember,
+    isIndividualMember,
+    isLargeInstitution,
+    isMediumInstitution,
+    isSmallInstitution,
+    isStudent,
+    largeInstitutionData,
+    mediumInstitutionData,
+    smallInstitutionData,
+    studentData,
+  ]);
+
+  const handleRegistrationSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setValidationAttempted(true);
+
+    const form = event.currentTarget;
+    const firstInvalidField = Array.from(
+      form.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
+        "input, select, textarea"
+      )
+    ).find((field) => {
+      const fieldName =
+        field.dataset.validationField || field.getAttribute("name");
+      return fieldName ? Boolean(validatedFieldErrors[fieldName]) : false;
+    });
+
+    if (Object.keys(validatedFieldErrors).length > 0) {
+      if (firstInvalidField) {
+        window.requestAnimationFrame(() => {
+          firstInvalidField.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          firstInvalidField.focus({ preventScroll: true });
+        });
+      }
+      return;
+    }
+
+    window.alert("You are successfully registered!");
+  };
+
+  // Membership selection validation
+  if (!category || !subcategory) {
+    return (
+      <main className="min-h-screen bg-gray-50 p-8">
+        <div className="mx-auto max-w-3xl rounded-xl bg-white p-6 shadow-sm">
+          <h1 className="text-xl font-bold text-gray-800">
+            No Membership Selected
           </h1>
 
           <p className="mt-2 text-gray-600">
+            Please return to the membership selection page and select a category and subcategory first.
+          </p>
+
+          <a
+            href="/membership-preview"
+            className="mt-5 inline-block rounded-lg bg-blue-700 px-5 py-3 text-white hover:bg-blue-800"
+          >
+            Back to Membership Selection
+          </a>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="membership-registration" data-membership-category={category}>
+      <form
+        className="membership-registration__content"
+        onSubmit={handleRegistrationSubmit}
+        noValidate
+      >
+        <RegistrationFieldErrorsProvider
+          errors={validationAttempted ? validatedFieldErrors : {}}
+        >
+
+        {/* Page Header */}
+        <header className="membership-registration__header">
+          <p className="membership-registration__eyebrow">
+            SEE MEMBERSHIP REGISTRATION
+          </p>
+
+          <h1>
+            Registration Form
+          </h1>
+
+          <p>
             Complete the information below to apply for SEE membership.
           </p>
         </header>
 
         {/* Selected Membership */}
-        <section className="rounded-xl border border-blue-100 bg-blue-50 p-5">
-          <p className="text-sm text-gray-600">
+        <section className="membership-selected-card">
+          <p className="membership-selected-card__label">
             Selected Membership
           </p>
 
-          <h2 className="mt-1 text-lg font-bold text-blue-900">
+          <h2 className="membership-selected-card__title">
             {membershipTitle}
           </h2>
         </section>
 
-        {/* Part 1: Common Form */}
-        <section className="rounded-xl bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800">
-              Part 1: Common Information
+        {/* Common Form */}
+        <section className="membership-form-card">
+          <div className="membership-form-card__header">
+            <h2>
+              Common Information
             </h2>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p>
               This information is required for all membership categories.
             </p>
           </div>
@@ -287,14 +468,14 @@ function RegistrationContent() {
           />
         </section>
 
-        {/* Part 2: Membership-Specific Form */}
-        <section className="rounded-xl bg-white p-6 shadow-sm">
-          <div className="mb-6">
-            <h2 className="text-xl font-bold text-gray-800">
-              Part 2: Membership-Specific Information
+        {/* Membership-Specific Form */}
+        <section className="membership-form-card">
+          <div className="membership-form-card__header">
+            <h2>
+              Membership-Specific Information
             </h2>
 
-            <p className="mt-1 text-sm text-gray-500">
+            <p>
               Complete the form for your selected membership type.
             </p>
           </div>
@@ -355,6 +536,22 @@ function RegistrationContent() {
             />
           )}
 
+          {/* Founding Member */}
+          {isFoundingMember && (
+            <FoundingMemberForm
+              value={foundingMemberData}
+              onChange={setFoundingMemberData}
+            />
+          )}
+
+          {/* Honorary Member */}
+          {isHonoraryMember && (
+            <HonoraryMemberForm
+              value={honoraryMemberData}
+              onChange={setHonoraryMemberData}
+            />
+          )}
+
           {/* Unconnected membership types */}
           {!isEarlyStage &&
             !isEstablished &&
@@ -362,13 +559,27 @@ function RegistrationContent() {
             !isIndividualMember &&
             !isSmallInstitution &&
             !isMediumInstitution &&
-            !isLargeInstitution && (
-              <p className="rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800">
+            !isLargeInstitution &&
+            !isFoundingMember &&
+            !isHonoraryMember && (
+              <p className="membership-form-notice">
                 The registration form for this membership type has not been connected yet.
               </p>
             )}
+
+          {isConnectedMembershipType && (
+            <div className="membership-submit-actions">
+              <button
+                className="membership-submit-button"
+                type="submit"
+              >
+                Submit Registration
+              </button>
+            </div>
+          )}
         </section>
-      </div>
+        </RegistrationFieldErrorsProvider>
+      </form>
     </main>
   );
 }
@@ -376,7 +587,11 @@ function RegistrationContent() {
 export default function RegistrationPage() {
   return (
     <Suspense
-      fallback={<p className="p-8">Loading registration...</p>}
+      fallback={
+        <p className="membership-registration__loading">
+          Loading registration...
+        </p>
+      }
     >
       <RegistrationContent />
     </Suspense>

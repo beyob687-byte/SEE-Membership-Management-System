@@ -2,8 +2,15 @@
 "use client";
 
 import { MediumInstitutionFormProps } from "./mediumTypes";
+import {
+  getRegistrationFieldAttributes,
+  RegistrationFieldError,
+  useRegistrationFieldErrors,
+} from "../../../Common form/registrationValidation";
 
 export default function MediumForm({ value, onChange }: MediumInstitutionFormProps) {
+  const fieldErrors = useRegistrationFieldErrors();
+
   const updateField = (field: keyof typeof value, fieldValue: any) => {
     onChange({
       ...value,
@@ -12,32 +19,36 @@ export default function MediumForm({ value, onChange }: MediumInstitutionFormPro
   };
 
   return (
-    <div className="space-y-6 rounded-xl border p-6 bg-white">
-      <h2 className="text-xl font-semibold">
+    <div className="see-membership-form see-institutional-form">
+      <h2>
         Medium Institutional Membership Form
       </h2>
 
       {/* Institution Information */}
-      <div className="space-y-4">
-        <h3 className="font-semibold text-lg">Institution Information</h3>
+      <div className="see-form-section">
+        <h3>Institution Information</h3>
 
-        <div>
-          <label className="block text-sm font-medium">Institution Name *</label>
+        <div className="see-form-field">
+          <label>Institution Name *</label>
           <input
+            {...getRegistrationFieldAttributes("institutionName", fieldErrors.institutionName)}
             value={value.institutionName}
             onChange={(e) => updateField("institutionName", e.target.value)}
-            className="w-full rounded-md border p-2"
             placeholder="Enter institution name"
+          />
+          <RegistrationFieldError
+            fieldName="institutionName"
+            error={fieldErrors.institutionName}
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium">Institution Type *</label>
+        <div className="see-form-grid see-form-grid--2">
+          <div className="see-form-field">
+            <label>Institution Type *</label>
             <select
+              {...getRegistrationFieldAttributes("institutionType", fieldErrors.institutionType)}
               value={value.institutionType}
               onChange={(e) => updateField("institutionType", e.target.value)}
-              className="w-full rounded-md border p-2"
             >
               <option value="">Select institution type</option>
               <option value="NGO">NGO</option>
@@ -47,14 +58,18 @@ export default function MediumForm({ value, onChange }: MediumInstitutionFormPro
               <option value="Private Institution">Private Institution</option>
               <option value="Other">Other</option>
             </select>
+            <RegistrationFieldError
+              fieldName="institutionType"
+              error={fieldErrors.institutionType}
+            />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium">Registration Type *</label>
+          <div className="see-form-field">
+            <label>Registration Type *</label>
             <select
+              {...getRegistrationFieldAttributes("registrationType", fieldErrors.registrationType)}
               value={value.registrationType}
               onChange={(e) => updateField("registrationType", e.target.value)}
-              className="w-full rounded-md border p-2"
             >
               <option value="">Select registration type</option>
               <option value="Registered">Registered</option>
@@ -62,20 +77,29 @@ export default function MediumForm({ value, onChange }: MediumInstitutionFormPro
               <option value="Government">Government</option>
               <option value="Academic">Academic</option>
             </select>
+            <RegistrationFieldError
+              fieldName="registrationType"
+              error={fieldErrors.registrationType}
+            />
           </div>
         </div>
 
-        <div >
-          <div>
+        <div className="see-form-grid see-form-grid--2">
+          <div className="see-form-field">
             <label>Sector *</label>
             <input
+              {...getRegistrationFieldAttributes("sector", fieldErrors.sector)}
               value={value.sector}
               onChange={(e) => updateField("sector", e.target.value)}
               placeholder="e.g. Education, Agriculture, Technology"
             />
+            <RegistrationFieldError
+              fieldName="sector"
+              error={fieldErrors.sector}
+            />
           </div>
 
-          <div>
+          <div className="see-form-field">
             <label>Year Established</label>
             <input
               type="number"
@@ -91,16 +115,21 @@ export default function MediumForm({ value, onChange }: MediumInstitutionFormPro
           </div>
         </div>
 
-        <div>
+        <div className="see-form-field">
           <label >Address *</label>
           <input
+            {...getRegistrationFieldAttributes("address", fieldErrors.address)}
             value={value.address}
             onChange={(e) => updateField("address", e.target.value)}
             placeholder="Institution address"
           />
+          <RegistrationFieldError
+            fieldName="address"
+            error={fieldErrors.address}
+          />
         </div>
 
-        <div>
+        <div className="see-form-field">
           <label>Website</label>
           <input
             value={value.website}
@@ -111,37 +140,47 @@ export default function MediumForm({ value, onChange }: MediumInstitutionFormPro
       </div>
 
       {/* Contact Person */}
-      <div >
+      <div className="see-form-section">
         <h3 >Contact Person</h3>
 
-        <div >
-          <div>
+        <div className="see-form-grid see-form-grid--2">
+          <div className="see-form-field">
             <label >Contact Person Name *</label>
             <input
+              {...getRegistrationFieldAttributes("contactPersonName", fieldErrors.contactPersonName)}
               value={value.contactPersonName}
               onChange={(e) => updateField("contactPersonName", e.target.value)}
               placeholder="Full name"
             />
+            <RegistrationFieldError
+              fieldName="contactPersonName"
+              error={fieldErrors.contactPersonName}
+            />
           </div>
 
-          <div>
+          <div className="see-form-field">
             <label>Position *</label>
             <input
+              {...getRegistrationFieldAttributes("contactPersonPosition", fieldErrors.contactPersonPosition)}
               value={value.contactPersonPosition}
               onChange={(e) =>
                 updateField("contactPersonPosition", e.target.value)
               }
               placeholder="e.g. Director, Manager"
             />
+            <RegistrationFieldError
+              fieldName="contactPersonPosition"
+              error={fieldErrors.contactPersonPosition}
+            />
           </div>
         </div>
       </div>
 
       {/* Focus & Collaboration */}
-      <div >
+      <div className="see-form-section">
         <h3 >Focus & Collaboration</h3>
 
-        <div>
+        <div className="see-form-field">
           <label >Thematic Focus Areas</label>
           <input
             value={value.thematicFocusAreas}
@@ -150,7 +189,7 @@ export default function MediumForm({ value, onChange }: MediumInstitutionFormPro
           />
         </div>
 
-        <div>
+        <div className="see-form-field">
           <label >Beneficiary Groups</label>
           <textarea
             value={value.beneficiaryGroups}

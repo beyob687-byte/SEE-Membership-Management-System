@@ -10,6 +10,11 @@ import type {
   IndividualMemberFormData,
   IndividualMemberFormProps,
 } from "./individualMemberTypes";
+import {
+  getRegistrationFieldAttributes,
+  RegistrationFieldError,
+  useRegistrationFieldErrors,
+} from "../../../Common form/registrationValidation";
 
 const supportOptions = [
   "Networking & Collaboration",
@@ -42,11 +47,11 @@ export default function IndividualMemberForm({
   const {
     register,
     watch,
-    formState: { errors },
   } = useForm<IndividualMemberFormData>({
     resolver: zodResolver(individualMemberSchema),
     defaultValues: value,
   });
+  const fieldErrors = useRegistrationFieldErrors();
 
   useEffect(() => {
     const subscription = watch((data) => {
@@ -57,71 +62,67 @@ export default function IndividualMemberForm({
   }, [watch, onChange]);
 
   return (
-    <div className="space-y-8 rounded-2xl border bg-white p-6 shadow-sm">
+    <div className="see-membership-form see-individual-form">
 
       {/* Professional Information */}
-      <section className="space-y-4">
-        <h3 className="border-b pb-2 text-lg font-semibold">
+      <section className="see-form-section">
+        <h3>
           Professional Information
         </h3>
 
         <div>
-          <label className="mb-1 block font-medium">
+          <label>
             Profession *
           </label>
           <input
             {...register("profession")}
+            {...getRegistrationFieldAttributes("profession", fieldErrors.profession)}
             placeholder="e.g. Business Consultant, Researcher"
-            className="w-full rounded-lg border p-3"
           />
-          {errors.profession && (
-            <p className="text-sm text-red-500">
-              {errors.profession.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="profession"
+            error={fieldErrors.profession}
+          />
         </div>
 
         <div>
-          <label className="mb-1 block font-medium">
+          <label>
             Organization / Workplace
           </label>
           <input
             {...register("organization")}
             placeholder="Organization or workplace"
-            className="w-full rounded-lg border p-3"
           />
         </div>
 
         <div>
-          <label className="mb-1 block font-medium">
+          <label>
             Job Title
           </label>
           <input
             {...register("jobTitle")}
             placeholder="Your current position"
-            className="w-full rounded-lg border p-3"
           />
         </div>
 
         <div>
-          <label className="mb-1 block font-medium">
+          <label>
             Area of Expertise *
           </label>
           <textarea
             {...register("areaOfExpertise")}
+            {...getRegistrationFieldAttributes("areaOfExpertise", fieldErrors.areaOfExpertise)}
             rows={3}
             placeholder="Describe your expertise"
-            className="w-full rounded-lg border p-3"
           />
-          {errors.areaOfExpertise && (
-            <p className="text-sm text-red-500">
-              {errors.areaOfExpertise.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="areaOfExpertise"
+            error={fieldErrors.areaOfExpertise}
+          />
         </div>
 
         <div>
-          <label className="mb-1 block font-medium">
+          <label>
             Years of Experience
           </label>
           <input
@@ -129,33 +130,32 @@ export default function IndividualMemberForm({
             {...register("experienceYears", {
               setValueAs: (v) => v === "" ? "" : Number(v),
             })}
+            {...getRegistrationFieldAttributes("experienceYears", fieldErrors.experienceYears)}
             min="0"
             placeholder="Years of experience"
-            className="w-full rounded-lg border p-3"
           />
-          {errors.experienceYears && (
-            <p className="text-sm text-red-500">
-              {errors.experienceYears.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="experienceYears"
+            error={fieldErrors.experienceYears}
+          />
         </div>
       </section>
 
       {/* Skills */}
-      <section className="space-y-4">
-        <h3 className="border-b pb-2 text-lg font-semibold">
+      <section className="see-form-section">
+        <h3>
           Skills & Expertise
         </h3>
 
-        <p className="text-sm text-gray-600">
+        <p>
           Select the skills you can contribute to the SEE ecosystem.
         </p>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="see-form-grid see-form-grid--choices">
           {skillOptions.map((skill) => (
             <label
               key={skill}
-              className="flex items-center gap-3 rounded-lg border p-3"
+              className="see-form-choice"
             >
               <input
                 type="checkbox"
@@ -169,21 +169,21 @@ export default function IndividualMemberForm({
       </section>
 
       {/* Membership Interests */}
-      <section className="space-y-4">
-        <h3 className="border-b pb-2 text-lg font-semibold">
+      <section className="see-form-section">
+        <h3>
           Areas of Interest
         </h3>
 
-        <p className="text-sm text-gray-600">
+        <p>
           Select the areas where you would like to participate
           or receive support through SEE.
         </p>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="see-form-grid see-form-grid--choices">
           {supportOptions.map((option) => (
             <label
               key={option}
-              className="flex items-center gap-3 rounded-lg border p-3"
+              className="see-form-choice"
             >
               <input
                 type="checkbox"

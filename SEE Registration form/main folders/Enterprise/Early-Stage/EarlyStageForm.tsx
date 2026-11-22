@@ -7,6 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import type { EarlyStageFormData } from "./earlyStageTypes";
 import { earlyStageSchema } from "./earlyStageSchema";
+import {
+  getRegistrationFieldAttributes,
+  RegistrationFieldError,
+  useRegistrationFieldErrors,
+} from "../../../Common form/registrationValidation";
 
 type EarlyStageFormProps = {
   value: EarlyStageFormData;
@@ -55,12 +60,12 @@ export default function EarlyStageForm({
     register,
     watch,
     setValue,
-    formState: { errors },
   } = useForm<EarlyStageFormData>({
     resolver: zodResolver(earlyStageSchema),
     defaultValues: value,
     mode: "onBlur",
   });
+  const fieldErrors = useRegistrationFieldErrors();
 
   useEffect(() => {
     const subscription = watch((data) => {
@@ -70,61 +75,54 @@ export default function EarlyStageForm({
     return () => subscription.unsubscribe();
   }, [watch, onChange]);
 
-  const inputClass =
-    "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100";
-
-  const labelClass = "mb-1 block text-sm font-medium text-gray-700";
-
-  const errorClass = "mt-1 text-xs text-red-600";
-
   return (
-    <div >
-      <section >
-        <div>
+    <div className="see-membership-form see-enterprise-form">
+      <section className="see-form-section">
+        <div className="see-form-intro">
           <h2>
             Enterprise Profile
           </h2>
-          <p >
+          <p className="see-form-help">
             Tell us about your enterprise.
           </p>
         </div>
 
-        <div>
-          <label className={labelClass}>Company / Enterprise Name *</label>
+        <div className="see-form-field">
+          <label>Company / Enterprise Name *</label>
           <input
             {...register("companyName")}
-            className={inputClass}
+            {...getRegistrationFieldAttributes("companyName", fieldErrors.companyName)}
             placeholder="Enter enterprise name"
           />
-          {errors.companyName && (
-            <p className={errorClass}>{errors.companyName.message}</p>
-          )}
+          <RegistrationFieldError
+            fieldName="companyName"
+            error={fieldErrors.companyName}
+          />
         </div>
 
-        <div >
-          <div>
-            <label className={labelClass}>Year Established *</label>
+        <div className="see-form-grid see-form-grid--2">
+          <div className="see-form-field">
+            <label>Year Established *</label>
             <input
               type="number"
               {...register("yearEstablished", {
                 setValueAs: (input) =>
                   input === "" ? "" : Number(input),
               })}
-              className={inputClass}
+              {...getRegistrationFieldAttributes("yearEstablished", fieldErrors.yearEstablished)}
               placeholder="e.g. 2025"
             />
-            {errors.yearEstablished && (
-              <p className={errorClass}>
-                {errors.yearEstablished.message}
-              </p>
-            )}
+            <RegistrationFieldError
+              fieldName="yearEstablished"
+              error={fieldErrors.yearEstablished}
+            />
           </div>
 
-          <div>
-            <label className={labelClass}>Legal Status *</label>
+          <div className="see-form-field">
+            <label>Legal Status *</label>
             <select
               {...register("legalStatus")}
-              className={inputClass}
+              {...getRegistrationFieldAttributes("legalStatus", fieldErrors.legalStatus)}
             >
               <option value="">Select legal status</option>
               {legalStatusOptions.map((status) => (
@@ -133,136 +131,134 @@ export default function EarlyStageForm({
                 </option>
               ))}
             </select>
-            {errors.legalStatus && (
-              <p className={errorClass}>{errors.legalStatus.message}</p>
-            )}
+            <RegistrationFieldError
+              fieldName="legalStatus"
+              error={fieldErrors.legalStatus}
+            />
           </div>
         </div>
 
-        <div>
-          <label className={labelClass}>Sector *</label>
+        <div className="see-form-field">
+          <label>Sector *</label>
           <input
             {...register("sector")}
-            className={inputClass}
+            {...getRegistrationFieldAttributes("sector", fieldErrors.sector)}
             placeholder="Enter your business sector"
           />
-          {errors.sector && (
-            <p className={errorClass}>{errors.sector.message}</p>
-          )}
+          <RegistrationFieldError
+            fieldName="sector"
+            error={fieldErrors.sector}
+          />
         </div>
 
-        <div>
-          <label className={labelClass}>Enterprise Address *</label>
+        <div className="see-form-field">
+          <label>Enterprise Address *</label>
           <input
             {...register("address")}
-            className={inputClass}
+            {...getRegistrationFieldAttributes("address", fieldErrors.address)}
             placeholder="Enter your enterprise address"
           />
-          {errors.address && (
-            <p className={errorClass}>{errors.address.message}</p>
-          )}
+          <RegistrationFieldError
+            fieldName="address"
+            error={fieldErrors.address}
+          />
         </div>
       </section>
 
       {/* Contact Information */}
-      <section>
-        <div>
+      <section className="see-form-section">
+        <div className="see-form-intro">
           <h2>
             Contact Information
           </h2>
         </div>
 
-        <div >
-          <div>
-            <label className={labelClass}>Contact Person Name *</label>
+        <div className="see-form-grid see-form-grid--2">
+          <div className="see-form-field">
+            <label>Contact Person Name *</label>
             <input
               {...register("contactPersonName")}
-              className={inputClass}
+              {...getRegistrationFieldAttributes("contactPersonName", fieldErrors.contactPersonName)}
               placeholder="Full name"
             />
-            {errors.contactPersonName && (
-              <p className={errorClass}>
-                {errors.contactPersonName.message}
-              </p>
-            )}
+            <RegistrationFieldError
+              fieldName="contactPersonName"
+              error={fieldErrors.contactPersonName}
+            />
           </div>
 
-          <div>
-            <label className={labelClass}>Position *</label>
+          <div className="see-form-field">
+            <label>Position *</label>
             <input
               {...register("contactPersonPosition")}
-              className={inputClass}
+              {...getRegistrationFieldAttributes("contactPersonPosition", fieldErrors.contactPersonPosition)}
               placeholder="e.g. Founder, Manager"
             />
-            {errors.contactPersonPosition && (
-              <p className={errorClass}>
-                {errors.contactPersonPosition.message}
-              </p>
-            )}
+            <RegistrationFieldError
+              fieldName="contactPersonPosition"
+              error={fieldErrors.contactPersonPosition}
+            />
           </div>
         </div>
 
-        <div>
-          <label className={labelClass}>Website / Social Media Links</label>
+        <div className="see-form-field">
+          <label>Website / Social Media Links</label>
           <input
             {...register("websiteOrSocialLinks")}
-            className={inputClass}
             placeholder="Enter website or social media links"
           />
         </div>
       </section>
 
       {/* Social Enterprise Information */}
-      <section >
-        <div>
-          <h2 >
+      <section className="see-form-section">
+        <div className="see-form-intro">
+          <h2>
             Social Enterprise Information
           </h2>
-          <p >
+          <p className="see-form-help">
             Explain the social or environmental impact of your enterprise.
-          </p><br />
+          </p>
         </div>
 
-        <div>
-          <label className={labelClass}>
+        <div className="see-form-field">
+          <label>
             What social or environmental problem does your enterprise
             address? *
           </label>
           <textarea
             {...register("socialEnvironmentalProblem")}
+            {...getRegistrationFieldAttributes("socialEnvironmentalProblem", fieldErrors.socialEnvironmentalProblem)}
             rows={4}
-            className={inputClass}
             placeholder="Describe the problem your enterprise is working to solve..."
-          /> <br /><br />
-          {errors.socialEnvironmentalProblem && (
-            <p className={errorClass}>
-              {errors.socialEnvironmentalProblem.message}
-            </p> 
-          )}
+          />
+          <RegistrationFieldError
+            fieldName="socialEnvironmentalProblem"
+            error={fieldErrors.socialEnvironmentalProblem}
+          />
         </div>
 
-        <div>
-          <label className={labelClass}>Who are your target beneficiaries? *</label>
+        <div className="see-form-field">
+          <label>Who are your target beneficiaries? *</label>
           <textarea
             {...register("targetBeneficiaries")}
+            {...getRegistrationFieldAttributes("targetBeneficiaries", fieldErrors.targetBeneficiaries)}
             rows={3}
-            className={inputClass}
             placeholder="Describe the people or communities benefiting from your work..."
           />
-          {errors.targetBeneficiaries && (
-            <p className={errorClass}>
-              {errors.targetBeneficiaries.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="targetBeneficiaries"
+            error={fieldErrors.targetBeneficiaries}
+          />
         </div>
 
-        <div >
-          <p >
+        <div className="see-form-callout">
+          <p>
             Does your enterprise reinvest at least 50% of its profit into
             its social or environmental mission?
           </p>
 
-          <label >
+          <label>
             <input
               type="checkbox"
               {...register("profitReinvestment")}
@@ -270,8 +266,7 @@ export default function EarlyStageForm({
             />
             Yes, our enterprise reinvests at least 50% of its profit.
           </label>
-          <label >
-            <br />
+          <label>
             <input
               type="checkbox"
               {...register("profitReinvestment")}
@@ -283,21 +278,22 @@ export default function EarlyStageForm({
       </section>
 
       {/* Self Assessment */}
-      <section>
-        <div>
-          <h2 >
+      <section className="see-form-section">
+        <div className="see-form-intro">
+          <h2>
             Social Enterprise Self-Assessment
           </h2>
-          <p >
+          <p className="see-form-help">
             Review the characteristics below and select those that apply
             to your enterprise.
           </p>
         </div>
 
-        <div>
+        <div className="see-form-choice-list">
           {socialEnterpriseCharacteristics.map((item) => (
             <label
               key={item.id}
+              className="see-form-choice"
             >
               <input
                 type="checkbox"
@@ -319,24 +315,24 @@ export default function EarlyStageForm({
       </section>
 
       {/* Supporting Documents */}
-      <section >
-        <div>
-          <h2 >
+      <section className="see-form-section">
+        <div className="see-form-intro">
+          <h2>
             Supporting Documents
           </h2>
-          <p >
+          <p className="see-form-help">
             Upload the documents that support your enterprise registration.
           </p>
         </div>
 
-        <div>
-          <label className={labelClass}>
+        <div className="see-form-field">
+          <label>
             Commercial Registration Document
           </label>
           <input
             type="file"
             accept=".pdf,.jpg,.jpeg,.png"
-            className={inputClass}
+            {...getRegistrationFieldAttributes("commercialRegistration", fieldErrors.commercialRegistration)}
             onChange={(event) =>
               setValue(
                 "commercialRegistration",
@@ -347,12 +343,12 @@ export default function EarlyStageForm({
           />
         </div>
 
-        <div>
-          <label className={labelClass}>TIN Document</label>
+        <div className="see-form-field">
+          <label>TIN Document</label>
           <input
             type="file"
             accept=".pdf,.jpg,.jpeg,.png"
-            className={inputClass}
+            {...getRegistrationFieldAttributes("tinDocument", fieldErrors.tinDocument)}
             onChange={(event) =>
               setValue(
                 "tinDocument",

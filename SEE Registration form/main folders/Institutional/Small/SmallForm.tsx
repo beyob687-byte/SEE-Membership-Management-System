@@ -10,6 +10,11 @@ import type {
   SmallInstitutionFormData,
   SmallInstitutionFormProps,
 } from "./smallTypes";
+import {
+  getRegistrationFieldAttributes,
+  RegistrationFieldError,
+  useRegistrationFieldErrors,
+} from "../../../Common form/registrationValidation";
 
 const institutionTypes = [
   "CSO",
@@ -50,11 +55,11 @@ export default function SmallForm({
   const {
     register,
     watch,
-    formState: { errors },
   } = useForm<SmallInstitutionFormData>({
     resolver: zodResolver(smallInstitutionSchema),
     defaultValues: value,
   });
+  const fieldErrors = useRegistrationFieldErrors();
 
   useEffect(() => {
     const subscription = watch((data) => {
@@ -65,10 +70,10 @@ export default function SmallForm({
   }, [watch, onChange]);
 
   return (
-    <div>
+    <div className="see-membership-form see-institutional-form">
 
       {/* Institution Information */}
-      <section >
+      <section className="see-form-section">
         <h3 >
           Institution Information
         </h3>
@@ -79,13 +84,13 @@ export default function SmallForm({
           </label>
           <input
             {...register("institutionName")}
+            {...getRegistrationFieldAttributes("institutionName", fieldErrors.institutionName)}
             placeholder="Enter institution name"
           />
-          {errors.institutionName && (
-            <p >
-              {errors.institutionName.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="institutionName"
+            error={fieldErrors.institutionName}
+          />
         </div>
 
         <div>
@@ -94,6 +99,7 @@ export default function SmallForm({
           </label>
           <select
             {...register("institutionType")}
+            {...getRegistrationFieldAttributes("institutionType", fieldErrors.institutionType)}
           >
             <option value="">Select institution type</option>
             {institutionTypes.map((type) => (
@@ -102,11 +108,10 @@ export default function SmallForm({
               </option>
             ))}
           </select>
-          {errors.institutionType && (
-            <p>
-              {errors.institutionType.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="institutionType"
+            error={fieldErrors.institutionType}
+          />
         </div>
 
         <div>
@@ -115,13 +120,13 @@ export default function SmallForm({
           </label>
           <input
             {...register("registrationType")}
+            {...getRegistrationFieldAttributes("registrationType", fieldErrors.registrationType)}
             placeholder="e.g. Local CSO, PLC, NGO"
           />
-          {errors.registrationType && (
-            <p>
-              {errors.registrationType.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="registrationType"
+            error={fieldErrors.registrationType}
+          />
         </div>
 
         <div>
@@ -130,13 +135,13 @@ export default function SmallForm({
           </label>
           <input
             {...register("sector")}
+            {...getRegistrationFieldAttributes("sector", fieldErrors.sector)}
             placeholder="Enter sector or industry"
           />
-          {errors.sector && (
-            <p className="text-sm text-red-500">
-              {errors.sector.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="sector"
+            error={fieldErrors.sector}
+          />
         </div>
 
         <div>
@@ -157,14 +162,14 @@ export default function SmallForm({
           </label>
           <textarea
             {...register("address")}
+            {...getRegistrationFieldAttributes("address", fieldErrors.address)}
             rows={3}
             placeholder="Enter institution address"
           />
-          {errors.address && (
-            <p >
-              {errors.address.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="address"
+            error={fieldErrors.address}
+          />
         </div>
 
         <div>
@@ -179,7 +184,7 @@ export default function SmallForm({
       </section>
 
       {/* Contact Person */}
-      <section className="space-y-4">
+      <section className="see-form-section">
         <h3 >
           Contact Person
         </h3>
@@ -190,13 +195,13 @@ export default function SmallForm({
           </label>
           <input
             {...register("contactPersonName")}
+            {...getRegistrationFieldAttributes("contactPersonName", fieldErrors.contactPersonName)}
             placeholder="Full name"
           />
-          {errors.contactPersonName && (
-            <p >
-              {errors.contactPersonName.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="contactPersonName"
+            error={fieldErrors.contactPersonName}
+          />
         </div>
 
         <div>
@@ -205,18 +210,18 @@ export default function SmallForm({
           </label>
           <input
             {...register("contactPersonPosition")}
+            {...getRegistrationFieldAttributes("contactPersonPosition", fieldErrors.contactPersonPosition)}
             placeholder="Position in the institution"
           />
-          {errors.contactPersonPosition && (
-            <p >
-              {errors.contactPersonPosition.message}
-            </p>
-          )}
+          <RegistrationFieldError
+            fieldName="contactPersonPosition"
+            error={fieldErrors.contactPersonPosition}
+          />
         </div>
       </section>
 
       {/* Institutional Focus */}
-      <section>
+      <section className="see-form-section">
         <h3>
           Institutional Focus & Collaboration
         </h3>
@@ -237,11 +242,9 @@ export default function SmallForm({
             Collaboration Areas
           </label>
 
-          <div >
+          <div className="see-form-grid see-form-grid--choices">
             {collaborationOptions.map((option) => (
-              <label
-                key={option}
-              >
+              <label key={option} className="see-form-choice">
                 <input
                   type="checkbox"
                   value={option}
@@ -266,7 +269,7 @@ export default function SmallForm({
       </section>
 
       {/* Programs */}
-      <section >
+      <section className="see-form-section">
         <h3>
           Support Programs
         </h3>
@@ -293,7 +296,7 @@ export default function SmallForm({
       </section>
 
       {/* Documents */}
-      <section >
+      <section className="see-form-section">
         <h3 >
           Supporting Documents
         </h3>

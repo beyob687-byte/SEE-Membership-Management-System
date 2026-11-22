@@ -11,6 +11,11 @@ import {
   referralOptions,
   membershipReasonOptions,
 } from "./commonOptions";
+import {
+  getRegistrationFieldAttributes,
+  RegistrationFieldError,
+  useRegistrationFieldErrors,
+} from "./registrationValidation";
 
 export default function CommonForm({
   value,
@@ -19,12 +24,11 @@ export default function CommonForm({
   const {
     register,
     watch,
-    formState: { errors },
   } = useForm<CommonFormData>({
     resolver: zodResolver(commonSchema),
     defaultValues: value,
-    mode: "onBlur",
   });
+  const fieldErrors = useRegistrationFieldErrors();
 
   useEffect(() => {
     const subscription = watch((data) => {
@@ -35,78 +39,79 @@ export default function CommonForm({
   }, [watch, onChange]);
 
   return (
-    <section className="space-y-6 rounded-xl border bg-white p-6">
-      <div>
-        <h2 className="text-xl font-bold text-gray-800">
+    <section className="see-membership-form see-common-form">
+      <div className="see-form-intro">
+        <h2>
           Common Information
         </h2>
-        <p className="mt-1 text-sm text-gray-500">
+        <p>
           Please provide your basic contact information.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div>
-          <label className="mb-2 block text-sm font-medium">
+      <div className="see-form-grid see-form-grid--2">
+        <div className="see-form-field">
+          <label>
             Full Name *
           </label>
           <input
             {...register("fullName")}
+            {...getRegistrationFieldAttributes("fullName", fieldErrors.fullName)}
             placeholder="Enter your full name"
-            className="w-full rounded-lg border px-4 py-3"
           />
-          <p className="mt-1 text-sm text-red-600">
-            {errors.fullName?.message}
-          </p>
+          <RegistrationFieldError
+            fieldName="fullName"
+            error={fieldErrors.fullName}
+          />
         </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium">
+        <div className="see-form-field">
+          <label>
             Email Address *
           </label>
           <input
             type="email"
             {...register("email")}
+            {...getRegistrationFieldAttributes("email", fieldErrors.email)}
             placeholder="example@email.com"
-            className="w-full rounded-lg border px-4 py-3"
           />
-          <p className="mt-1 text-sm text-red-600">
-            {errors.email?.message}
-          </p>
+          <RegistrationFieldError
+            fieldName="email"
+            error={fieldErrors.email}
+          />
         </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium">
+        <div className="see-form-field">
+          <label>
             Phone Number *
           </label>
           <input
             {...register("phone")}
+            {...getRegistrationFieldAttributes("phone", fieldErrors.phone)}
             placeholder="+251 9XX XXX XXX"
-            className="w-full rounded-lg border px-4 py-3"
           />
-          <p className="mt-1 text-sm text-red-600">
-            {errors.phone?.message}
-          </p>
+          <RegistrationFieldError
+            fieldName="phone"
+            error={fieldErrors.phone}
+          />
         </div>
 
-        <div>
-          <label className="mb-2 block text-sm font-medium">
+        <div className="see-form-field">
+          <label>
             National ID / Fayda (Optional)
           </label>
           <input
             {...register("nationalId")}
             placeholder="Enter your ID number"
-            className="w-full rounded-lg border px-4 py-3"
           />
         </div>
 
-        <div className="md:col-span-2">
-          <label className="mb-2 block text-sm font-medium">
+        <div className="see-form-field see-form-field--full">
+          <label>
             How did you hear about SEE?
           </label>
           <select
             {...register("referralSource")}
-            className="w-full rounded-lg border bg-white px-4 py-3"
           >
             <option value="">Select an option</option>
             {referralOptions.map((option) => (
@@ -118,25 +123,24 @@ export default function CommonForm({
         </div>
       </div>
 
-      <div>
-        <h3 className="mb-2 font-semibold text-gray-800">
+      <div className="see-form-section">
+        <h3>
           Why do you want to join SEE?
         </h3>
-        <p className="mb-4 text-sm text-gray-500">
+        <p>
           Select all reasons that apply to you.
         </p>
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="see-form-grid see-form-grid--choices">
           {membershipReasonOptions.map((reason) => (
             <label
               key={reason}
-              className="flex cursor-pointer items-center gap-3 rounded-lg border p-3 text-sm hover:bg-gray-50"
+              className="see-form-choice"
             >
               <input
                 type="checkbox"
                 value={reason}
                 {...register("membershipReasons")}
-                className="h-4 w-4 accent-teal-700"
               />
               {reason}
             </label>
