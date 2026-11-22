@@ -134,3 +134,71 @@ export const featuredPrograms = [
     accent: "green",
   },
 ];
+
+export const featuredEvents = [
+  {
+    id: "01",
+    category: "NETWORKING",
+    title: "Connect with Ethiopia's Social Enterprise Community",
+    description:
+      "Meet social entrepreneurs, exchange ideas, and discover opportunities to collaborate with people working to create positive change.",
+    date: "TBA",
+    month: "TBA",
+    year: "To be announced",
+    location: "Location to be announced",
+    featured: true,
+  },
+  {
+    id: "02",
+    category: "LEARNING",
+    title: "Social Enterprise Learning Sessions",
+    description:
+      "Practical learning and knowledge-sharing opportunities for social entrepreneurs.",
+    date: "TBA",
+    month: "TBA",
+    year: "To be announced",
+    location: "To be announced",
+  },
+  {
+    id: "03",
+    category: "COMMUNITY",
+    title: "Ecosystem Meetups",
+    description:
+      "A space for members and ecosystem partners to connect and share experiences.",
+    date: "TBA",
+    month: "TBA",
+    year: "To be announced",
+    location: "To be announced",
+  },
+];
+
+export const featuredMembers = [
+  {
+    id: "01",
+    name: "Member Enterprise One",
+    category: "AGRICULTURE & FOOD",
+    description:
+      "An example of how purpose-driven businesses can create sustainable livelihoods and meaningful community impact.",
+    image: "/images/members/member-one.jpg",
+    location: "Ethiopia",
+    featured: true,
+  },
+  {
+    id: "02",
+    name: "Member Enterprise Two",
+    category: "EDUCATION",
+    description:
+      "Creating opportunities through inclusive education and skills development.",
+    image: "/images/members/member-two.jpg",
+    location: "Ethiopia",
+  },
+  {
+    id: "03",
+    name: "Member Enterprise Three",
+    category: "ENVIRONMENT",
+    description:
+      "Building a more sustainable future through innovative environmental solutions.",
+    image: "/images/members/member-three.jpg",
+    location: "Ethiopia",
+  },
+];
