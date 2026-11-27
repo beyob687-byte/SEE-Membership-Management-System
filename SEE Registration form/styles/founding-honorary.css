@@ -1,0 +1,7 @@
+.membership-registration[data-membership-category="founding-honorary"] {
+  --see-form-primary: #7046a5;
+  --see-form-hover: #563581;
+  --see-form-soft: #f4effa;
+  --see-form-border: #d2c2e6;
+  --see-form-focus: #a586cf;
+}

@@ -1,0 +1,7 @@
+.membership-registration[data-membership-category="institutional"] {
+  --see-form-primary: #a76b12;
+  --see-form-hover: #83520d;
+  --see-form-soft: #fbf5e9;
+  --see-form-border: #e6d2a8;
+  --see-form-focus: #d3a753;
+}

@@ -1,9 +1,23 @@
-import Image from "next/image";
+import Hero from "@/components/home/Hero";
+import ImpactStats from "@/components/home/ImpactStats";
+import AboutPreview from "@/components/home/AboutPreview";
+import WhatWeDo from "@/components/home/WhatWeDo";
+import FeaturedPrograms from "@/components/home/FeaturedPrograms";
+import FeaturedEvents from "@/components/home/FeaturedEvents";
+import MemberShowcase from "@/components/home/MemberShowcase";
+import DevelopmentPartners from "@/components/home/DevelopmentPartners";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>main page</h1>
-    </div>
+    <>
+      <Hero />
+      <ImpactStats />
+      <AboutPreview />
+      <WhatWeDo/>
+      <FeaturedPrograms/>
+      <FeaturedEvents />
+      <MemberShowcase />
+      <DevelopmentPartners />
+    </>
   );
-}
+} 
