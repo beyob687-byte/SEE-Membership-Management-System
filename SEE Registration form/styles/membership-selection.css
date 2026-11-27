@@ -1,0 +1,307 @@
+
+/* =========================================
+   SEE MEMBERSHIP CATEGORY SELECTION
+========================================= */
+
+.membership-selection {
+  min-height: 100vh;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+
+.membership-selection__content {
+  width: min(100% - 2rem, 1280px);
+  margin: 0 auto;
+  padding: 4rem 0 5rem;
+}
+
+.membership-selection__intro {
+  max-width: 760px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.membership-selection__eyebrow {
+  color: var(--color-teal);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.membership-selection__intro h1 {
+  margin-top: 0.75rem;
+  color: var(--color-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.membership-selection__intro p {
+  max-width: 650px;
+  margin: 1rem auto 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.membership-selection__heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.membership-selection__heading h2 {
+  color: var(--color-heading);
+  font-size: 1.5rem;
+  font-weight: 750;
+}
+
+.membership-selection__heading p {
+  margin-top: 0.4rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.membership-selection__count {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.membership-selection__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.membership-selection__card {
+  display: flex;
+  min-height: 245px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 15px;
+  background: var(--color-background-alt);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 15px 40px rgb(0 0 0 / 30%);
+  transition: transform 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.membership-selection__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-teal);
+  box-shadow: var(--shadow-md);
+}
+
+.membership-selection__card.is-selected {
+  border: 2px solid var(--color-teal);
+  background: var(--color-background-alt);
+  box-shadow: 0 0 0 4px rgb(34 197 94 / 12%);
+}
+
+.membership-selection__icon {
+  display: grid;
+  width: 3.1rem;
+  height: 3.1rem;
+  place-items: center;
+  margin-bottom: 1.3rem;
+  border-radius: 0.8rem;
+  background: var(--color-background);
+  color: var(--color-teal);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.membership-selection__card-title {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.7rem;
+  color: var(--color-heading);
+  font-size: 1.05rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.membership-selection__toggle {
+  color: var(--color-teal);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.membership-selection__description {
+  margin-top: 0.65rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.membership-selection__action {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: var(--color-teal);
+  font-size: 0.75rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.membership-selection__panel {
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--color-border);
+  border-radius: 15px;
+  background: var(--color-background-alt);
+  box-shadow: var(--shadow-sm);
+}
+
+.membership-selection__panel-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.membership-selection__panel-header h3 {
+  margin-top: 0.4rem;
+  color: var(--color-heading);
+  font-size: 1.5rem;
+  font-weight: 750;
+}
+
+.membership-selection__panel-header > p {
+  max-width: 420px;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.membership-selection__options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.membership-selection__option {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: var(--color-background);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.membership-selection__option:hover {
+  border-color: var(--color-teal);
+  box-shadow: var(--shadow-sm);
+}
+
+.membership-selection__option h4 {
+  color: var(--color-heading);
+  font-size: 1.05rem;
+  font-weight: 750;
+}
+
+.membership-selection__option-description {
+  margin-top: 0.6rem;
+  color: var(--color-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.membership-selection__fee {
+  margin-top: 1.2rem;
+  border-radius: 0.5rem;
+  background: var(--color-background-alt);
+  padding: 0.75rem;
+  color: var(--color-teal);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.membership-selection__register {
+  display: flex;
+  width: 100%;
+  min-height: 2.9rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--color-teal);
+  color: var(--color-button-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 180ms ease;
+}
+
+.membership-selection__register:hover {
+  background: var(--color-accent-hover);
+}
+
+.membership-selection button:focus-visible {
+  outline: 3px solid var(--color-teal);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+  .membership-selection__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .membership-selection__options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .membership-selection__content {
+    padding: 2.5rem 0 3.5rem;
+  }
+
+  .membership-selection__intro {
+    margin-bottom: 2.5rem;
+  }
+
+  .membership-selection__heading,
+  .membership-selection__panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .membership-selection__grid,
+  .membership-selection__options {
+    grid-template-columns: 1fr;
+  }
+
+  .membership-selection__card {
+    min-height: 210px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .membership-selection__card,
+  .membership-selection__option,
+  .membership-selection__register {
+    transition: none;
+  }
+
+  .membership-selection__card:hover {
+    transform: none;
+  }
+}

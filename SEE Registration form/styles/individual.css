@@ -1,7 +1,7 @@
 .membership-registration[data-membership-category="individual"] {
-  --see-form-primary: #2867a7;
-  --see-form-hover: #1e4f83;
-  --see-form-soft: #eef5fc;
-  --see-form-border: #bfd5eb;
-  --see-form-focus: #72a8dc;
+  --see-form-primary: var(--color-teal);
+  --see-form-hover: var(--color-accent-hover);
+  --see-form-soft: var(--color-background-alt);
+  --see-form-border: var(--color-border);
+  --see-form-focus: var(--color-teal);
 }

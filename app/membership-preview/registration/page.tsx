@@ -3,6 +3,12 @@
 import { Suspense, useMemo, useState, type FormEvent } from "react";
 import { useSearchParams } from "next/navigation";
 
+import "../../../SEE Registration form/styles/common-membership.css";
+import "../../../SEE Registration form/styles/enterprise.css";
+import "../../../SEE Registration form/styles/founding-honorary.css";
+import "../../../SEE Registration form/styles/individual.css";
+import "../../../SEE Registration form/styles/institutional.css";
+
 import CommonForm from "../../../SEE Registration form/Common form/CommonForm";
 import type { CommonFormData } from "../../../SEE Registration form/Common form/commonTypes";
 import { commonSchema } from "../../../SEE Registration form/Common form/commonSchema";
@@ -392,19 +398,19 @@ function RegistrationContent() {
   // Membership selection validation
   if (!category || !subcategory) {
     return (
-      <main className="min-h-screen bg-gray-50 p-8">
-        <div className="mx-auto max-w-3xl rounded-xl bg-white p-6 shadow-sm">
-          <h1 className="text-xl font-bold text-gray-800">
+      <main className="membership-registration membership-registration__missing">
+        <div className="membership-registration__missing-card">
+          <h1>
             No Membership Selected
           </h1>
 
-          <p className="mt-2 text-gray-600">
+          <p>
             Please return to the membership selection page and select a category and subcategory first.
           </p>
 
           <a
             href="/membership-preview"
-            className="mt-5 inline-block rounded-lg bg-blue-700 px-5 py-3 text-white hover:bg-blue-800"
+            className="membership-registration__back-link"
           >
             Back to Membership Selection
           </a>

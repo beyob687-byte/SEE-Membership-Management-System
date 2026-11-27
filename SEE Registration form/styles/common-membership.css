@@ -1,13 +1,13 @@
 .membership-registration {
-  --see-form-primary: #287b63;
-  --see-form-hover: #1d614e;
-  --see-form-soft: #edf5f1;
-  --see-form-border: #b7d6c8;
-  --see-form-focus: #64a88f;
+  --see-form-primary: var(--color-teal);
+  --see-form-hover: var(--color-accent-hover);
+  --see-form-soft: var(--color-background-alt);
+  --see-form-border: var(--color-border);
+  --see-form-focus: var(--color-teal);
   min-height: 100vh;
-  background: #f6f7f5;
-  color: #263b47;
   padding: clamp(1.5rem, 4vw, 3rem) 1rem;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 .membership-registration__content {
@@ -31,21 +31,25 @@
 
 .membership-registration__header h1 {
   margin-top: 0.45rem;
-  color: #20394c;
+  color: var(--color-heading);
   font-size: clamp(1.8rem, 4vw, 2.4rem);
   font-weight: 750;
   letter-spacing: -0.035em;
 }
 
-.membership-selected-card {
-  border: 1px solid #e2e8e4;
-  border-radius: 0.8rem;
+.membership-selected-card,
+.membership-form-card {
+  border: 1px solid var(--see-form-border);
+  border-radius: 15px;
   background: var(--see-form-soft);
+}
+
+.membership-selected-card {
   padding: 1.1rem 1.25rem;
 }
 
 .membership-selected-card__label {
-  color: #586a72;
+  color: var(--color-muted);
   font-size: 0.84rem;
 }
 
@@ -57,43 +61,80 @@
 }
 
 .membership-form-card {
-  border: 1px solid #e2e8e4;
-  border-radius: 0.9rem;
-  background: #fff;
   padding: clamp(1rem, 3vw, 1.75rem);
-  box-shadow: 0 5px 20px rgb(25 48 39 / 5%);
+  box-shadow: var(--shadow-sm);
 }
 
 .membership-form-card__header {
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid #edf0ee;
+  border-bottom: 1px solid var(--color-border-muted);
   padding-bottom: 1rem;
 }
 
 .membership-form-card__header h2 {
-  color: #20394c;
+  color: var(--color-heading);
   font-size: 1.25rem;
   font-weight: 750;
 }
 
 .membership-form-card__header p {
   margin-top: 0.35rem;
-  color: #697780;
+  color: var(--color-muted);
   font-size: 0.9rem;
 }
 
 .membership-form-notice {
-  border: 1px solid #ead7aa;
-  border-radius: 0.65rem;
-  background: #fff8e9;
+  border: 1px solid var(--color-border-muted);
+  border-radius: 10px;
+  background: var(--color-background);
   padding: 1rem;
-  color: #805a14;
+  color: var(--color-text);
   font-size: 0.9rem;
 }
 
 .membership-registration__loading {
   padding: 2rem;
-  color: #586a72;
+  color: var(--color-muted);
+}
+
+.membership-registration__missing {
+  display: grid;
+  place-items: start center;
+}
+
+.membership-registration__missing-card {
+  width: min(100%, 48rem);
+  border: 1px solid var(--color-border);
+  border-radius: 15px;
+  background: var(--color-background-alt);
+  padding: clamp(1.5rem, 4vw, 2rem);
+  box-shadow: var(--shadow-sm);
+}
+
+.membership-registration__missing-card h1 {
+  color: var(--color-heading);
+  font-size: 1.4rem;
+  font-weight: 750;
+}
+
+.membership-registration__missing-card p {
+  margin-top: 0.6rem;
+  color: var(--color-muted);
+}
+
+.membership-registration__back-link {
+  display: inline-flex;
+  margin-top: 1.25rem;
+  border-radius: 6px;
+  background: var(--color-teal);
+  padding: 0.75rem 1rem;
+  color: var(--color-button-text);
+  font-weight: 700;
+  transition: background-color 150ms ease;
+}
+
+.membership-registration__back-link:hover {
+  background: var(--color-accent-hover);
 }
 
 .membership-submit-actions {
@@ -107,10 +148,10 @@
   width: 100%;
   min-height: 3rem;
   border: 0;
-  border-radius: 0.6rem;
+  border-radius: 6px;
   background: var(--see-form-primary);
   padding: 0.85rem 1.1rem;
-  color: #fff;
+  color: var(--color-button-text);
   font: inherit;
   font-weight: 700;
   text-align: center;
@@ -129,28 +170,24 @@
 
 .membership-submit-button:disabled {
   cursor: not-allowed;
-  background: #a7b3ae;
+  background: var(--color-border-muted);
+  color: var(--color-muted);
   opacity: 0.7;
 }
 
 .see-membership-form {
   display: grid;
   gap: 1.25rem;
-  color: #263b47;
+  color: var(--color-text);
 }
 
 .see-membership-form > h2 {
-  color: #20394c;
+  color: var(--color-heading);
   font-size: 1.2rem;
   font-weight: 750;
 }
 
-.see-membership-form > div:has(> label) {
-  display: grid;
-  gap: 0.45rem;
-  min-width: 0;
-}
-
+.see-membership-form > div:has(> label),
 .see-membership-form .see-form-section > div:not(.see-form-intro):not(.see-form-grid):not(.see-form-choice-list):not(.see-form-callout):not(.see-form-header) {
   display: grid;
   gap: 0.45rem;
@@ -163,9 +200,9 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 1.1rem;
   min-width: 0;
-  border: 1px solid #e4e9e6;
-  border-radius: 0.8rem;
-  background: #fff;
+  border: 1px solid var(--see-form-border);
+  border-radius: 12px;
+  background: var(--color-background-alt);
   padding: clamp(1rem, 2.5vw, 1.4rem);
 }
 
@@ -174,14 +211,22 @@
 .see-membership-form > section > h2,
 .see-membership-form > section > h3,
 .see-membership-form .see-form-section > h2,
-.see-membership-form .see-form-section > h3 {
+.see-membership-form .see-form-section > h3,
+.see-membership-form .see-form-header,
+.see-membership-form .see-form-notice,
+.see-membership-form .see-form-callout,
+.see-membership-form .see-form-intro,
+.see-membership-form .see-form-section > .see-form-grid,
+.see-membership-form .see-form-section > .see-form-choice-list,
+.see-membership-form .see-form-section > .see-form-field--full,
+.see-membership-form .see-form-field--full {
   grid-column: 1 / -1;
 }
 
 .see-membership-form h2,
 .see-membership-form h3,
 .see-membership-form h4 {
-  color: #20394c;
+  color: var(--color-heading);
   font-weight: 700;
   line-height: 1.35;
 }
@@ -199,7 +244,7 @@
 }
 
 .see-membership-form p {
-  color: #62727b;
+  color: var(--color-muted);
   font-size: 0.9rem;
   line-height: 1.6;
 }
@@ -207,29 +252,15 @@
 .see-membership-form .see-form-header,
 .see-membership-form .see-form-notice,
 .see-membership-form .see-form-callout {
-  grid-column: 1 / -1;
-  border: 1px solid #e4e9e6;
-  border-radius: 0.7rem;
+  border: 1px solid var(--see-form-border);
+  border-radius: 10px;
   background: var(--see-form-soft);
   padding: 1rem;
 }
 
 .see-membership-form .see-form-intro {
-  grid-column: 1 / -1;
   display: grid;
   gap: 0.35rem;
-}
-
-.see-membership-form .see-form-section > .see-form-grid,
-.see-membership-form .see-form-section > .see-form-choice-list,
-.see-membership-form .see-form-section > .see-form-callout,
-.see-membership-form .see-form-section > .see-form-header,
-.see-membership-form .see-form-section > .see-form-field--full {
-  grid-column: 1 / -1;
-}
-
-.see-membership-form .see-form-field--full {
-  grid-column: 1 / -1;
 }
 
 .see-membership-form .see-form-header h2,
@@ -252,7 +283,7 @@
 
 .see-membership-form label {
   display: block;
-  color: #344a55;
+  color: var(--color-text);
   font-size: 0.9rem;
   font-weight: 650;
   line-height: 1.45;
@@ -265,11 +296,11 @@
   width: 100%;
   min-width: 0;
   min-height: 2.9rem;
-  border: 1px solid #cbd5d1;
-  border-radius: 0.55rem;
-  background: #fff;
+  border: 1px solid var(--see-form-border);
+  border-radius: 6px;
+  background: var(--color-background);
   padding: 0.7rem 0.85rem;
-  color: #263b47;
+  color: var(--color-heading);
   font: inherit;
   font-size: 0.95rem;
   line-height: 1.45;
@@ -288,7 +319,7 @@
 .see-membership-form input[type="file"]::file-selector-button {
   margin-right: 0.75rem;
   border: 0;
-  border-radius: 0.4rem;
+  border-radius: 6px;
   background: var(--see-form-soft);
   padding: 0.5rem 0.7rem;
   color: var(--see-form-primary);
@@ -299,7 +330,7 @@
 
 .see-membership-form input::placeholder,
 .see-membership-form textarea::placeholder {
-  color: #87939a;
+  color: var(--color-muted);
 }
 
 .see-membership-form input:focus,
@@ -341,8 +372,8 @@
 .see-membership-form textarea:disabled,
 .see-membership-form button:disabled {
   cursor: not-allowed;
-  background: #f1f3f2;
-  color: #89949a;
+  background: var(--color-border-muted);
+  color: var(--color-muted);
   opacity: 0.75;
 }
 
@@ -366,9 +397,9 @@
   align-items: flex-start;
   gap: 0.7rem;
   min-width: 0;
-  border: 1px solid #e0e7e3;
-  border-radius: 0.65rem;
-  background: #fcfdfc;
+  border: 1px solid var(--see-form-border);
+  border-radius: 10px;
+  background: var(--color-background);
   padding: 0.8rem;
   font-weight: 500;
   cursor: pointer;
@@ -376,13 +407,9 @@
 }
 
 .see-membership-form label:has(> input[type="checkbox"]):hover,
-.see-membership-form label:has(> input[type="radio"]):hover {
-  border-color: var(--see-form-border);
-  background: var(--see-form-soft);
-}
-
+.see-membership-form label:has(> input[type="radio"]):hover,
 .see-membership-form label:has(> input:checked) {
-  border-color: var(--see-form-border);
+  border-color: var(--see-form-primary);
   background: var(--see-form-soft);
 }
 
@@ -402,25 +429,29 @@
   gap: 0.7rem;
 }
 
-.see-membership-form .see-form-error {
-  margin: 0.25rem 0 0;
+.see-membership-form .see-form-error,
+.see-membership-form input + p,
+.see-membership-form select + p,
+.see-membership-form textarea + p,
+.membership-registration [role="alert"] {
   color: #b42318;
-  font-size: 0.82rem;
-  font-weight: 550;
-  line-height: 1.45;
 }
 
+.see-membership-form .see-form-error,
 .see-membership-form input + p,
 .see-membership-form select + p,
 .see-membership-form textarea + p {
   margin: 0.25rem 0 0;
-  color: #b42318;
   font-size: 0.82rem;
   line-height: 1.45;
 }
 
+.see-membership-form .see-form-error {
+  font-weight: 550;
+}
+
 .see-membership-form .see-form-help {
-  color: #64737b;
+  color: var(--color-muted);
   font-size: 0.85rem;
 }
 
@@ -430,16 +461,9 @@
 }
 
 .see-common-form > .see-form-grid,
-.see-common-form > .see-form-section {
-  grid-column: 1 / -1;
-}
-
+.see-common-form > .see-form-section,
 .see-common-form > .see-form-section > .see-form-grid {
   grid-column: 1 / -1;
-}
-
-.membership-registration [role="alert"] {
-  color: #b42318;
 }
 
 @media (min-width: 42rem) {
@@ -463,11 +487,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .see-membership-form .see-form-header,
-  .see-membership-form .see-form-callout {
-    grid-column: 1 / -1;
-  }
-
   .see-founding-form,
   .see-honorary-form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -484,10 +503,7 @@
   }
 
   .see-membership-form > section,
-  .see-membership-form .see-form-section {
-    padding: 1rem;
-  }
-
+  .see-membership-form .see-form-section,
   .see-membership-form label:has(> input[type="checkbox"]),
   .see-membership-form label:has(> input[type="radio"]) {
     padding: 0.7rem;
